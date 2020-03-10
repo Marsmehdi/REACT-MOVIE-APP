@@ -1,0 +1,143 @@
+import React from 'react'
+import { v4 as uuidv4 } from 'uuid';
+
+import  { useState } from 'react'
+import{Button,Modal } from 'react-bootstrap'
+
+const Moviecard =()=> {
+
+
+    const [show, setShow] = useState(false);
+        const handleClose = () => setShow(false);
+        const handleShow = () => setShow(true);
+     
+    const[films,setFilms] = useState([{
+        id:uuidv4(),
+         lien:"#" ,
+         
+             scr:"https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRzMYQl-BlRp2PtWgyqqxU9EeCkaFKGBxRgSs-gUPtGT_gTftVz" ,srcset:"https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRzMYQl-BlRp2PtWgyqqxU9EeCkaFKGBxRgSs-gUPtGT_gTftVz 1x, https://www.docplanner.com/images/warsaw@2x.png 2x",
+        
+             txt:'Escobar'
+             
+      
+       },{
+           id:uuidv4(),
+        lien:"#" ,
+        
+             scr:"https://fr.web.img6.acsta.net/c_224_335_50_50/pictures/20/01/23/16/45/4653965.jpg" ,srcset:"https://fr.web.img6.acsta.net/c_224_335_50_50/pictures/20/01/23/16/45/4653965.jpg 1x",
+        
+         
+             txt:'The boy'
+       },{
+           id:uuidv4(),
+         lien:"#" ,
+          scr:"https://fr.web.img2.acsta.net/pictures/19/10/25/11/18/5224976.jpg", srcset:"https://fr.web.img2.acsta.net/pictures/19/10/25/11/18/5224976.jpg 1x",
+        
+             txt:'Titanic'
+       },{
+           id:uuidv4(),
+         lien:"#" ,
+         
+          scr:"https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTjy3zMLZmDjNfhF9MwkRLaKlh3gbMWOYa81eVRqSkWb9piYnuE", srcset:"https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTjy3zMLZmDjNfhF9MwkRLaKlh3gbMWOYa81eVRqSkWb9piYnuE 1x, https://www.docplanner.com/images/istanbul@2x.png 2x",
+         
+             txt:'Prince oublie'
+       },{
+           id:uuidv4(),
+         lien:"#" ,
+         scr:"https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQk-Xm6NKrOVOb4IFYklNP3wzrAGNesPEu5mMbRklqq4cyZtijJ", srcset:"https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQk-Xm6NKrOVOb4IFYklNP3wzrAGNesPEu5mMbRklqq4cyZtijJ 1x, https://www.docplanner.com/images/mexico-city@2x.png 2x",
+         
+             txt:' The Fighter'
+       }])
+
+
+
+       const [film, setFilm] = useState({ src:"",txt:"", });
+    const onChange = (event) => {
+      setFilm({ ...film, [event.target.name]: event.target.value });
+    };
+    const onSubmit = (event) => {
+      event.preventDefault();
+      if (film.src.trim() === '' || film.txt.trim() === '') return;
+  
+      const newFilm = {
+          lien:'#',
+        src: film.src.trim(),
+        srcset:film.src+' 1x',
+        txt: film.txt.trim(),
+        id:uuidv4()
+      };
+  
+      setFilms([...films, newFilm]);
+      setFilm({ src: '', txt: '', });
+    
+    
+    }
+ 
+    return(<div className="movlist" > {films.map(el=>(
+
+
+    <div class="carte">
+    <a href={el.lien} class="photo">
+        <figure class="office__image">
+            <img width="300" height="400" scr={el.scr} alt="" srcset={el.srcset}/>
+        </figure>
+        <div class="office__desc">
+           {el.txt}
+           
+        </div>
+    </a>
+    </div>) )
+}
+<div>
+ 
+
+
+ <Button variant="primary" onClick={handleShow}>+
+    
+ </Button>
+
+ <Modal show={show} onHide={handleClose} animation={false}>
+   <Modal.Header closeButton>
+     <Modal.Title>Ajouter un film</Modal.Title>
+   </Modal.Header>
+   <Modal.Body><form onSubmit={onSubmit}>
+         <div className="form-group">
+           <input
+             type="text"
+             className="form-control"
+             name="src"
+             placeholder="l'affiche de film.."
+             value={film.src}
+             onChange={onChange}
+           />
+         </div>
+         <div className="form-group">
+           <input
+             type="text"
+             className="form-control"
+             name="txt"
+             placeholder="Nom de film.."
+             value={film.txt}
+             onChange={onChange}
+           />
+         </div>
+    
+         
+       </form>
+      
+     </Modal.Body>
+   <Modal.Footer>
+     
+     <Button className="btn btn-success" onClick={onSubmit} >
+       Add film
+     </Button>
+     
+   </Modal.Footer>
+ </Modal>
+
+
+         </div>
+</div>) }
+   
+
+export default Moviecard
